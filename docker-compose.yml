@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    env_file: .env
+    restart: always
+
+  nginx:
+    image: nginx:1.9.8
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/etc/conf.d:/etc/nginx/conf.d
+      - ./www:/usr/share/nginx/html
+    links:
+      - php-fpm
+      - phpmyadmin
+    restart: always
+
+  php-fpm:
+    image: php:5.6-fpm
+    container_name: php-fpm
+    volumes:
+      - ./php/etc:/usr/local/etc/php
+      - ./www:/usr/share/nginx/html
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    env_file: .env
+    links:
+      - mysql:db
+    ports:
+      - 8080:80
+    restart: always
