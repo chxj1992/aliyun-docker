@@ -5,7 +5,7 @@ services:
     image: mysql:5.7
     container_name: mysql
     ports:
-      - "3306:3306"
+      - "3309:3306"
     env_file: .env
     restart: always
 
@@ -13,7 +13,7 @@ services:
     image: nginx:1.9.8
     container_name: nginx
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ./nginx/etc/conf.d:/etc/nginx/conf.d
       - ./www:/usr/share/nginx/html
@@ -37,5 +37,5 @@ services:
     links:
       - mysql:db
     ports:
-      - 8080:80
+      - "8888:80"
     restart: always
