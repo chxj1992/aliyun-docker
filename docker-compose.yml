@@ -13,21 +13,25 @@ services:
     image: nginx:1.9.8
     container_name: nginx
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./nginx/etc/conf.d:/etc/nginx/conf.d
       - ./www:/usr/share/nginx/html
     links:
       - php-fpm
       - phpmyadmin
+      - php-good-practice 
+      - ghost 
     restart: always
 
   php-fpm:
-    image: php:5.6-fpm
+    #image: php:5.6-fpm
+    build: ./php 
     container_name: php-fpm
     volumes:
-      - ./php/etc:/usr/local/etc/php
       - ./www:/usr/share/nginx/html
+    links:
+      - "mysql"
     restart: always
 
   phpmyadmin:
@@ -48,5 +52,14 @@ services:
     ports:
       - "2368:2368"
     command: npm start --production
+    restart: always
+
+  php-good-practice:
+    image: dordoka/reveal
+    container_name: php-good-practice
+    volumes:
+      - ./reveal/php-good-practice:/home/reveal/presos
+    ports:
+      - "8000:8000"
     restart: always
 
