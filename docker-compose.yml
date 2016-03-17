@@ -39,3 +39,13 @@ services:
     ports:
       - "8888:80"
     restart: always
+
+  ghost:
+    image: ghost:0.7.2
+    container_name: ghost
+    volumes:
+      - ./ghost:/var/lib/ghost
+    ports:
+      - "2368:2368"
+    restart: always
+
