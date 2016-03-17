@@ -47,5 +47,6 @@ services:
       - ./ghost:/var/lib/ghost
     ports:
       - "2368:2368"
+    command: npm start --production
     restart: always
 
