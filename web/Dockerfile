@@ -7,7 +7,7 @@ ADD php.ini    /usr/local/etc/php/php.ini
 RUN docker-php-ext-install pdo_mysql
 
 RUN apt-get update
-RUN apt-get install -y wget python2.7 python2.7-dev libmysqlclient-dev
+RUN apt-get install -y wget python2.7 python2.7-dev libmysqlclient-dev libxml2-dev libxslt1-dev
 RUN ln -s /usr/bin/python2.7 /usr/bin/python
 
 # Do following install tasks in /tmp
@@ -17,6 +17,6 @@ WORKDIR /tmp
 RUN wget https://bootstrap.pypa.io/get-pip.py
 RUN python get-pip.py
 RUN pip install --upgrade setuptools
-RUN pip install beautifulsoup4 MySQL-python requests
+RUN pip install beautifulsoup4 MySQL-python requests lxml
 
 CMD ["php-fpm"]

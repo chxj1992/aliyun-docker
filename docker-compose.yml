@@ -18,16 +18,16 @@ services:
       - ./nginx/etc/conf.d:/etc/nginx/conf.d
       - ./www:/usr/share/nginx/html
     links:
-      - php-fpm
+      - web
       - phpmyadmin
       - php-good-practice 
       - ghost 
     restart: always
 
-  php-fpm:
+  web:
     #image: php:5.6-fpm
-    build: ./php 
-    container_name: php-fpm
+    build: ./web
+    container_name: web
     volumes:
       - ./www:/usr/share/nginx/html
     links:
