@@ -17,6 +17,6 @@ WORKDIR /tmp
 RUN wget https://bootstrap.pypa.io/get-pip.py
 RUN python get-pip.py
 RUN pip install --upgrade setuptools
-RUN pip install beautifulsoup4 MySQL-python requests lxml
+RUN pip install beautifulsoup4 MySQL-python requests lxml python-dotenv
 
 CMD ["php-fpm"]
