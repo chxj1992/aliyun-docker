@@ -6,6 +6,11 @@ services:
     container_name: mysql
     ports:
       - "3309:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/etc/conf.d:/etc/mysql/conf.d
+      - ./mysql_run.sh:/mysql_run.sh
+    command: /mysql_run.sh
     env_file: .env
     restart: always
 
@@ -51,7 +56,8 @@ services:
       - ./ghost:/var/lib/ghost
     ports:
       - "2368:2368"
-    command: npm start --production
+    environment:
+      - NODE_ENV=production
     restart: always
 
   php-good-practice:
