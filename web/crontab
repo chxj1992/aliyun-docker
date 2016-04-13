@@ -8,5 +8,4 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 * *	* * *	root  echo 'hello' >> /var/log/hello.log
 * *	* * *	root  php /usr/share/nginx/html/apples-data-center/artisan schedule:run >> /dev/null 2>&1
-* *	* * *	root  php /usr/share/nginx/html/apples-data-center/artisan  >> /var/log/test.log
 
