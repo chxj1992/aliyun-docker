@@ -6,6 +6,6 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-* *	* * *	root  echo 'hello' >> /var/log/hello.log
+* *	* * *	root  echo hello $(date) >> /var/log/hello.log
 * *	* * *	root  php /usr/share/nginx/html/apples-data-center/artisan schedule:run >> /dev/null 2>&1
 
