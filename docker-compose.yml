@@ -27,6 +27,7 @@ services:
       - phpmyadmin
       - php-good-practice 
       - ghost 
+      - beanstalkd-console
     restart: always
 
   web:
@@ -35,6 +36,7 @@ services:
     container_name: web
     links:
       - "mysql"
+      - "beanstalkd"
     ports:
       - "9009:9001"
     volumes: 
@@ -73,5 +75,21 @@ services:
       - ./reveal/php-good-practice:/home/reveal/presos
     ports:
       - "8000:8000"
+    restart: always
+
+  beanstalkd:
+    image: schickling/beanstalkd
+    container_name: beanstalkd
+    ports:
+      - "11300:11300"
+    restart: always
+
+  beanstalkd-console:
+    image: schickling/beanstalkd-console
+    container_name: beanstalkd-console
+    ports:
+      - "2080:2080"
+    links:
+      - beanstalkd
     restart: always
 
