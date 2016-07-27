@@ -45,6 +45,13 @@ services:
       - ./www:/usr/share/nginx/html
     restart: always
 
+  crawlers:
+    build: ./www/crawlers
+    container_name: crawlers
+    ports:
+      - "5000:5000"
+    restart: always
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -90,4 +97,13 @@ services:
     links:
       - beanstalkd
     restart: always
+
+  shadowsocks:
+    image: littleqz/shadowsocks-client
+    container_name: shadowsocks
+    ports:
+      - "1080:1080"
+    env_file: .env
+    restart: always
+
 
