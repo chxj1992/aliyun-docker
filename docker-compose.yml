@@ -50,6 +50,8 @@ services:
     container_name: crawlers
     ports:
       - "5000:5000"
+    volumes:
+      - ./www/crawlers:/usr/src/app
     restart: always
 
   phpmyadmin:
@@ -58,8 +60,6 @@ services:
     env_file: .env
     links:
       - mysql:db
-    ports:
-      - "8888:80"
     restart: always
 
   ghost:
@@ -102,7 +102,7 @@ services:
     image: littleqz/shadowsocks-client
     container_name: shadowsocks
     ports:
-      - "1080:1080"
+      - "1088:1080"
     env_file: .env
     restart: always
 
