@@ -106,4 +106,11 @@ services:
     env_file: .env
     restart: always
 
+  realms-wiki:
+    image: realms/realms-wiki 
+    container_name: realms-wiki
+    ports:
+      - "5001:5000"
+    restart: always
+
 
