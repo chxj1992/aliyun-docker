@@ -1,4 +1,4 @@
 .env
 ghost
-mysql
+mysql/data
 www
