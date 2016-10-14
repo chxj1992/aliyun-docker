@@ -1,0 +1,5 @@
+.env
+ghost
+mysql/data
+www
+satis/composer/cache

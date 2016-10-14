@@ -1,0 +1,134 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/etc/conf.d:/etc/mysql/conf.d
+    env_file: .env
+    restart: always
+
+  nginx:
+    image: nginx:1.9.8
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/etc/conf.d:/etc/nginx/conf.d
+      - ./www:/usr/share/nginx/html
+    links:
+      - web
+      - phpmyadmin
+      - php-good-practice 
+      - ghost 
+      - beanstalkd-console
+      - gollum
+    restart: always
+
+  web:
+    #image: php:5.6-fpm
+    build: ./web
+    container_name: web
+    links:
+      - "mysql"
+      - "beanstalkd"
+    ports:
+      - "9009:9001"
+    volumes: 
+      - ./web/cron:/etc/pam.d/cron
+      - ./web/crontab:/etc/crontab
+      - ./web/log:/var/log
+      - ./web/supervisor:/etc/supervisor/conf.d
+      - ./www:/usr/share/nginx/html
+    restart: always
+
+  crawlers:
+    build: ./www/crawlers
+    container_name: crawlers
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./www/crawlers:/usr/src/app
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    env_file: .env
+    links:
+      - mysql:db
+    restart: always
+
+  ghost:
+    image: ghost:0.7.2
+    container_name: ghost
+    volumes:
+      - ./ghost:/var/lib/ghost
+    ports:
+      - "2368:2368"
+    environment:
+      - NODE_ENV=production
+    restart: always
+
+  php-good-practice:
+    image: dordoka/reveal
+    container_name: php-good-practice
+    volumes:
+      - ./reveal/php-good-practice:/home/reveal/presos
+    ports:
+      - "8000:8000"
+    restart: always
+
+  beanstalkd:
+    image: schickling/beanstalkd
+    container_name: beanstalkd
+    ports:
+      - "11300:11300"
+    restart: always
+
+  beanstalkd-console:
+    image: schickling/beanstalkd-console
+    container_name: beanstalkd-console
+    ports:
+      - "2080:2080"
+    links:
+      - beanstalkd
+    restart: always
+
+  shadowsocks:
+    image: littleqz/shadowsocks-client
+    container_name: shadowsocks
+    ports:
+      - "1088:1080"
+    env_file: .env
+    restart: always
+
+  gollum:
+    build: ./gollum
+    container_name: gollum
+    volumes: 
+      - ./gollum/wiki:/wiki
+    restart: always
+
+  redis:
+    image: redis
+    container_name: redis
+    ports: 
+      - "6379:6379"
+    restart: always
+
+  satis:
+    image: ypereirareis/docker-satis:4.2
+    volumes:
+      - ./satis/config.json:/app/config.json
+      - ./satis/composer:/root/.composer
+    ports:
+      - 3333:3000
+      - 3334:80
+    environment: 
+      CRONTAB_FREQUENCY: "0 */1 * * *"
+
