@@ -121,14 +121,3 @@ services:
       - "6379:6379"
     restart: always
 
-  satis:
-    image: ypereirareis/docker-satis:4.2
-    volumes:
-      - ./satis/config.json:/app/config.json
-      - ./satis/composer:/root/.composer
-    ports:
-      - 3333:3000
-      - 3334:80
-    environment: 
-      CRONTAB_FREQUENCY: "0 */1 * * *"
-
