@@ -4,7 +4,7 @@ FROM php:5.6-fpm
 ADD php.ini    /usr/local/etc/php/php.ini
 #ADD php-fpm.conf    /usr/local/etc/php-fpm.conf
 
-RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo_mysql mysql mysqli
 
 RUN apt-get update
 RUN apt-get install -y wget python2.7 python2.7-dev python-pip libmysqlclient-dev libxml2-dev libxslt1-dev mysql-client cron supervisor rsyslog
