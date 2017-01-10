@@ -64,7 +64,7 @@ services:
     restart: always
 
   ghost:
-    image: ghost:0.7.2
+    image: ghost:0.11.3
     container_name: ghost
     volumes:
       - ./ghost:/var/lib/ghost
