@@ -35,8 +35,9 @@ services:
     build: ./web
     container_name: web
     links:
-      - "mysql"
-      - "beanstalkd"
+      - redis
+      - mysql
+      - beanstalkd
     ports:
       - "9009:9001"
     volumes: 
