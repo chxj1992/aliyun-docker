@@ -21,6 +21,8 @@ RUN mkdir -p /var/log/supervisor
 RUN pip install -U pip setuptools -i http://pypi.douban.com/simple 
 RUN pip install beautifulsoup4 MySQL-python requests lxml html5lib python-dotenv -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
 
+RUN pecl install swoole
+
 ADD php.ini    /usr/local/etc/php/php.ini
 #ADD php-fpm.conf    /usr/local/etc/php-fpm.conf
 
