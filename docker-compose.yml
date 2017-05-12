@@ -95,14 +95,6 @@ services:
       - beanstalkd
     restart: always
 
-  shadowsocks:
-    image: littleqz/shadowsocks-client
-    container_name: shadowsocks
-    ports:
-      - "1088:1080"
-    env_file: .env
-    restart: always
-
   gollum:
     build: ./gollum
     container_name: gollum
