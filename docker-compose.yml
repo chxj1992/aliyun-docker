@@ -17,6 +17,7 @@ services:
     container_name: nginx
     ports:
       - "80:80"
+      - "8899:8899"
       - "443:443"
     volumes:
       - ./nginx/etc/conf.d:/etc/nginx/conf.d
@@ -28,6 +29,7 @@ services:
       - ghost 
       - beanstalkd-console
       - gollum
+      - php7 
     restart: always
 
   web:
@@ -45,6 +47,16 @@ services:
       - ./web/crontab:/etc/crontab
       - ./web/log:/var/log
       - ./web/supervisor:/etc/supervisor/conf.d
+      - ./www:/usr/share/nginx/html
+    restart: always
+
+  php7:
+    build: ./php7
+    container_name: php7
+    links:
+      - redis
+      - mysql
+    volumes: 
       - ./www:/usr/share/nginx/html
     restart: always
 
